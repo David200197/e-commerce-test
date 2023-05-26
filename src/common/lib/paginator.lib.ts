@@ -18,6 +18,10 @@ export class Paginator {
     return this.perPage;
   }
 
+  get take() {
+    return this.perPage;
+  }
+
   getTotalPage(totalElement: number) {
     if (!this.perPage) return 1;
     return Math.ceil(totalElement / this.perPage);

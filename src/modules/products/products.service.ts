@@ -11,9 +11,15 @@ import { AssociatedImagesService } from '../associated-images/associated-images.
 import { getNotFoundMessage } from 'src/common/messages/errors';
 import { UpdateDto } from './dtos/update.dto';
 import { SetOperation } from 'src/common/lib/set-operation.lib';
+import { FindDto } from './dtos/find.dto';
+import { FindQueryDto } from 'src/common/dtos/find-query.dto';
+import { Paginator } from 'src/common/lib/paginator.lib';
+import { isNumber } from 'class-validator';
 
 @Injectable()
 export class ProductsService {
+  private PER_PAGE = 10;
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly tagsService: TagsService,
@@ -29,6 +35,67 @@ export class ProductsService {
     const normalizedName = name.split(' ').join('_');
     const sku = `${prefix}-${normalizedName}-${suffix}`;
     return sku;
+  }
+
+  private buildFindQuery = ({
+    tagIds,
+    associatedImage,
+    ...findDto
+  }: FindDto) => {
+    let query = {};
+    for (const key in findDto) {
+      const value = findDto[key];
+      if (isNumber(value)) {
+        query = { ...query, [key]: value };
+      } else {
+        query = { ...query, [key]: new RegExp(value, 'i') };
+      }
+    }
+
+    let associatedImagesQuery = {};
+    if (associatedImage)
+      associatedImagesQuery = {
+        associatedImages: { some: { url: associatedImage } },
+      };
+
+    let tagQuery = {};
+    if (tagIds)
+      tagQuery = {
+        productsOnTags: { some: { AND: tagIds.map((tagId) => ({ tagId })) } },
+      };
+
+    return {
+      ...query,
+      ...associatedImagesQuery,
+      ...tagQuery,
+    };
+  };
+
+  async findAll(findDto: FindDto = {}, { page = 1 }: FindQueryDto = {}) {
+    const findQuery = this.buildFindQuery(findDto);
+
+    const paginator = new Paginator({ page, perPage: this.PER_PAGE });
+    const products = await this.prisma.product.findMany({
+      where: findQuery,
+      take: paginator.take,
+      skip: paginator.skip,
+      include: {
+        associatedImages: true,
+        productsOnTags: { include: { tag: true } },
+      },
+    });
+
+    const totalElement = await this.findTotalElements(findDto);
+    const totalPage = paginator.getTotalPage(totalElement);
+
+    return { products, page, totalElement, totalPage, perPage: this.PER_PAGE };
+  }
+
+  async findTotalElements(findDto: FindDto = {}) {
+    const findQuery = this.buildFindQuery(findDto);
+    return await this.prisma.product.count({
+      where: findQuery,
+    });
   }
 
   async findOneBySku(sku: string) {

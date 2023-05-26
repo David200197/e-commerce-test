@@ -23,9 +23,6 @@ export class PermissionsGuard implements CanActivate {
       secondArray: userLoggedPermissions,
     });
     if (!setOperation.hasDifference()) return true;
-    const codes = setOperation.difference().join(', ');
-    throw new UnauthorizedException(
-      `access denied: this endpoint not have: ${codes}`,
-    );
+    return false;
   }
 }
