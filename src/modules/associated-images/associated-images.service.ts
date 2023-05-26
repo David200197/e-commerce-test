@@ -6,28 +6,11 @@ import { PrismaService } from 'src/shared/prisma/prisma.service';
 export class AssociatedImagesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findSomeByUrls(urls: string[]) {
-    return this.prisma.associatedImage.findMany({
+  async findAllByUrls(urls: string[]) {
+    const associatedImages = await this.prisma.associatedImage.findMany({
       where: { OR: urls.map((url) => ({ url })) },
     });
-  }
-
-  async findAllByUrls(urls: string[]) {
-    return this.prisma.associatedImage.findMany({
-      where: { AND: urls.map((url) => ({ url })) },
-    });
-  }
-
-  async createByUrls(urls: string[]) {
-    const associatedImages = await this.findSomeByUrls(urls);
-
-    if (associatedImages.length)
-      throw new NotFoundException(associatedImages.join(' and ') + 'exist');
-
-    const urlPromises = urls.map((url) =>
-      this.prisma.associatedImage.create({ data: { url } }),
-    );
-    return await Promise.all(urlPromises);
+    return associatedImages;
   }
 
   async deleteByUrls(urls: string[]) {
@@ -36,9 +19,12 @@ export class AssociatedImagesService {
     if (!associatedImages.length)
       throw new NotFoundException(getNotFoundMessage('associated images'));
 
-    const urlPromises = urls.map((url) =>
-      this.prisma.associatedImage.delete({ where: { url } }),
-    );
-    return await Promise.all(urlPromises);
+    return await this.prisma.associatedImage.deleteMany({
+      where: {
+        OR: associatedImages.map((associatedImage) => ({
+          url: associatedImage.url,
+        })),
+      },
+    });
   }
 }

@@ -4,21 +4,21 @@ import { IsOptional } from 'class-validator';
 
 export class UpdateDto extends PartialType(CreateDto) {
   @IsOptional()
-  name: string;
+  name?: string;
   @IsOptional()
-  price: number;
+  price?: number;
   @IsOptional()
-  stockQuantity: number;
+  stockQuantity?: number;
   @IsOptional()
-  category: string;
+  category?: string;
   @IsOptional()
-  tagIds: string[];
+  tagIds?: string[];
   @IsOptional()
-  additionalInformation: string;
+  additionalInformation?: string;
   @IsOptional()
-  assessment: string;
+  assessment?: number;
   @IsOptional()
-  description: string;
+  description?: string;
   @IsOptional()
-  urlAssociatedImages: string[];
+  urlAssociatedImages?: string[];
 }

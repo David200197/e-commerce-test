@@ -44,12 +44,12 @@ model RolesOnPermissions {
 model Product {
   sku                   String            @id
   name                  String
-  price                 Decimal
+  price                 Float
   stockQuantity         Int
   category              String
   description           String
   additionalInformation String
-  assessment            String
+  assessment            Int
   associatedImages      AssociatedImage[]
   productsOnTags        ProductsOnTags[]
 }
@@ -63,11 +63,10 @@ model Tag {
 
 model ProductsOnTags {
   tag     Tag     @relation(fields: [tagId], references: [id])
-  product Product @relation(fields: [productSku], references: [sku])
+  product Product @relation(fields: [productSku], references: [sku], onDelete: Cascade, onUpdate: Cascade)
 
   tagId      String
   productSku String
-  salesSku   String?
 
   @@id([tagId, productSku])
 }
@@ -76,27 +75,31 @@ model AssociatedImage {
   url        String   @id
   Product    Product? @relation(fields: [productSku], references: [sku], onDelete: Cascade, onUpdate: Cascade)
   productSku String?
-  Sales      Sales?   @relation(fields: [salesSku], references: [sku])
-  salesSku   String?
+}
+
+model CopyAssociatedImage {
+  url      String  @id
+  Sales    Sales?  @relation(fields: [salesSku], references: [sku], onDelete: Cascade, onUpdate: Cascade)
+  salesSku String?
 }
 
 model Sales {
-  sku                   String            @id
+  sku                   String                @id
   name                  String
-  price                 Decimal
+  price                 Float
   stockQuantity         Int
   category              String
   description           String
   additionalInformation String
-  assessment            String
+  assessment            Int
   createAt              DateTime
-  associatedImages      AssociatedImage[]
+  associatedImages      CopyAssociatedImage[]
   salesOnTags           SalesOnTags[]
 }
 
 model SalesOnTags {
-  tag      Tag    @relation(fields: [tagId], references: [id])
-  sales    Sales  @relation(fields: [salesSku], references: [sku])
+  tag      Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  sales    Sales  @relation(fields: [salesSku], references: [sku], onDelete: Cascade, onUpdate: Cascade)
   tagId    String
   salesSku String
 
