@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id
+  name     String
+  email    String  @unique
+  password String
+  rol      Rol?    @relation(fields: [rolId], references: [id])
+  rolId    String?
+}
+
+model Rol {
+  id                 String               @id
+  name               String
+  User               User[]
+  rolesOnPermissions RolesOnPermissions[]
+}
+
+model Permission {
+  id                 String               @id
+  name               String
+  rolesOnPermissions RolesOnPermissions[]
+}
+
+model RolesOnPermissions {
+  rol          Rol        @relation(fields: [rolId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  rolId        String
+  permissionId String
+
+  @@id([rolId, permissionId])
+}
+
+model Product {
+  sku                   String            @id
+  name                  String
+  price                 Decimal
+  stockQuantity         Int
+  category              String
+  description           String
+  additionalInformation String
+  assessment            String
+  associatedImages      AssociatedImage[]
+  productsOnTags        ProductsOnTags[]
+}
+
+model Tag {
+  id             String           @id
+  name           String           @unique
+  productsOnTags ProductsOnTags[]
+  salesOnTags    SalesOnTags[]
+}
+
+model ProductsOnTags {
+  tag     Tag     @relation(fields: [tagId], references: [id])
+  product Product @relation(fields: [productSku], references: [sku])
+
+  tagId      String
+  productSku String
+  salesSku   String?
+
+  @@id([tagId, productSku])
+}
+
+model AssociatedImage {
+  url        String   @id
+  Product    Product? @relation(fields: [productSku], references: [sku], onDelete: Cascade, onUpdate: Cascade)
+  productSku String?
+  Sales      Sales?   @relation(fields: [salesSku], references: [sku])
+  salesSku   String?
+}
+
+model Sales {
+  sku                   String            @id
+  name                  String
+  price                 Decimal
+  stockQuantity         Int
+  category              String
+  description           String
+  additionalInformation String
+  assessment            String
+  createAt              DateTime
+  associatedImages      AssociatedImage[]
+  salesOnTags           SalesOnTags[]
+}
+
+model SalesOnTags {
+  tag      Tag    @relation(fields: [tagId], references: [id])
+  sales    Sales  @relation(fields: [salesSku], references: [sku])
+  tagId    String
+  salesSku String
+
+  @@id([tagId, salesSku])
+}
