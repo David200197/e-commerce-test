@@ -46,4 +46,8 @@ export class PrismaMockService {
       : [];
     return new PrismaMethods(users);
   }
+
+  sales() {
+    return new PrismaMethods();
+  }
 }
