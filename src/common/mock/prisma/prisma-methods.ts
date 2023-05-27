@@ -5,6 +5,10 @@ export class PrismaMethods<Elements> {
     return this.elements;
   }
 
+  findFirst() {
+    return this.elements[0];
+  }
+
   deleteMany() {
     return this.elements;
   }

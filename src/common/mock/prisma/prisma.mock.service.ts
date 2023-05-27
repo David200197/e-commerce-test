@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AssociatedImage, CopyAssociatedImage } from './interfaces';
+import { AssociatedImage, CopyAssociatedImage, User } from './interfaces';
 import { PrismaMethods } from './prisma-methods';
 
 @Injectable()
@@ -34,5 +34,16 @@ export class PrismaMockService {
 
   get tag() {
     return new PrismaMethods();
+  }
+
+  get user() {
+    const users: User[] = this.hasData
+      ? [
+          { email: 'email1', name: 'name1' },
+          { email: 'email2', name: 'name2' },
+          { email: 'email3', name: 'name3' },
+        ]
+      : [];
+    return new PrismaMethods(users);
   }
 }

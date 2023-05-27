@@ -41,6 +41,7 @@ describe('AssociatedImagesService', () => {
         await service.deleteByUrls(['test']);
       });
       expect(resultFn).rejects.toThrow(NOT_FOUND_MESSAGE('associated images'));
+      prisma.changeHasData(true);
     });
   });
 });
