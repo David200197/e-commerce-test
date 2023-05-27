@@ -39,7 +39,7 @@ export class LauncherService implements OnModuleInit {
     const tagsPromise = [
       'zapatos',
       'ropa',
-      'jugetes',
+      'juguetes',
       'libros',
       'accesorios para el hogar',
     ].map((name) => this.tagsService.create({ name }));
