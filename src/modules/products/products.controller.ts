@@ -49,6 +49,15 @@ export class ProductsController {
     return { message: `El producto ${product.sku} a sido creado` };
   }
 
+  @Post('sell/:sku')
+  @UseGuards(JwtAuthGuard, new PermissionsGuard(['sell_product']))
+  async sell(@Param() paramDto: ParamDto) {
+    const { sale, product } = await this.productsService.sell(paramDto.sku);
+    return {
+      message: `El producto ${product.sku} a sido vendido, código de venta: ${sale.id}`,
+    };
+  }
+
   @Put(':sku')
   @UseGuards(JwtAuthGuard, new PermissionsGuard(['update_product']))
   async update(@Param() paramDto: ParamDto, @Body() updateDto: UpdateDto) {

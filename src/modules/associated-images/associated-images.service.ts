@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { getNotFoundMessage } from 'src/common/messages/errors';
+import { NOT_FOUND_MESSAGE } from 'src/common/messages/errors';
 import { PrismaService } from 'src/shared/prisma/prisma.service';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class AssociatedImagesService {
     const associatedImages = await this.findAllByUrls(urls);
 
     if (!associatedImages.length)
-      throw new NotFoundException(getNotFoundMessage('associated images'));
+      throw new NotFoundException(NOT_FOUND_MESSAGE('associated images'));
 
     return await this.prisma.associatedImage.deleteMany({
       where: {

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { getNotFoundMessage } from 'src/common/messages/errors';
+import { NOT_FOUND_MESSAGE } from 'src/common/messages/errors';
 import { PrismaService } from 'src/shared/prisma/prisma.service';
 import { CreateDto } from './dtos/create.dto';
 import { randomUUID } from 'crypto';
@@ -23,7 +23,7 @@ export class UsersService {
         },
       },
     });
-    if (!user) throw new NotFoundException(getNotFoundMessage('user'));
+    if (!user) throw new NotFoundException(NOT_FOUND_MESSAGE('user'));
     return user;
   }
 

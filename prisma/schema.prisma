@@ -78,30 +78,39 @@ model AssociatedImage {
 }
 
 model CopyAssociatedImage {
-  url      String  @id
-  Sales    Sales?  @relation(fields: [salesSku], references: [sku], onDelete: Cascade, onUpdate: Cascade)
-  salesSku String?
+  url                    String                       @id
+  salesOnCopyAssociatedImage SalesOnCopyAssociatedImage[]
+}
+
+model SalesOnCopyAssociatedImage {
+  CopyAssociatedImage CopyAssociatedImage @relation(fields: [copyAssociatedImageUrl], references: [url])
+  Sales               Sales               @relation(fields: [salesId], references: [id])
+
+  copyAssociatedImageUrl String
+  salesId                String
+
+  @@id([copyAssociatedImageUrl, salesId])
 }
 
 model Sales {
-  sku                   String                @id
-  name                  String
-  price                 Float
-  stockQuantity         Int
-  category              String
-  description           String
-  additionalInformation String
-  assessment            Int
-  createAt              DateTime
-  associatedImages      CopyAssociatedImage[]
-  salesOnTags           SalesOnTags[]
+  id                     String                       @id
+  sku                    String
+  name                   String
+  price                  Float
+  category               String
+  description            String
+  additionalInformation  String
+  assessment             Int
+  createAt               DateTime
+  salesOnCopyAssociatedImage SalesOnCopyAssociatedImage[]
+  salesOnTags            SalesOnTags[]
 }
 
 model SalesOnTags {
-  tag      Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  sales    Sales  @relation(fields: [salesSku], references: [sku], onDelete: Cascade, onUpdate: Cascade)
-  tagId    String
-  salesSku String
+  tag     Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  sales   Sales  @relation(fields: [salesId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  tagId   String
+  salesId String
 
-  @@id([tagId, salesSku])
+  @@id([tagId, salesId])
 }

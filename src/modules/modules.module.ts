@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { RolesOnPermissionsModule } from './roles-on-permissions/roles-on-permissions.module';
 import { TagsModule } from './tags/tags.module';
 import { AssociatedImagesModule } from './associated-images/associated-images.module';
+import { SalesModule } from './sales/sales.module';
+import { CopyAssociatedImagesModule } from './copy-associated-images/copy-associated-images.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { AssociatedImagesModule } from './associated-images/associated-images.mo
     RolesOnPermissionsModule,
     TagsModule,
     AssociatedImagesModule,
+    SalesModule,
+    CopyAssociatedImagesModule,
   ],
 })
 export class ModulesModule {}

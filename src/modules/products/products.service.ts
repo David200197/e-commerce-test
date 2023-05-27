@@ -8,13 +8,19 @@ import { GenerateSkuDto } from './dtos/generate-sku.dto';
 import { CreateDto } from './dtos/create.dto';
 import { TagsService } from '../tags/tags.service';
 import { AssociatedImagesService } from '../associated-images/associated-images.service';
-import { getNotFoundMessage } from 'src/common/messages/errors';
+import {
+  CONFLICT_NO_STOCK_QUANTITY,
+  CONFLICT_PRODUCT_URL,
+  NOT_FOUND_MESSAGE,
+} from 'src/common/messages/errors';
 import { UpdateDto } from './dtos/update.dto';
 import { SetOperation } from 'src/common/lib/set-operation.lib';
 import { FindDto } from './dtos/find.dto';
 import { FindQueryDto } from 'src/common/dtos/find-query.dto';
 import { Paginator } from 'src/common/lib/paginator.lib';
 import { isNumber } from 'class-validator';
+import { SalesService } from '../sales/sales.service';
+import { CopyAssociatedImagesService } from '../copy-associated-images/copy-associated-images.service';
 
 @Injectable()
 export class ProductsService {
@@ -24,52 +30,9 @@ export class ProductsService {
     private readonly prisma: PrismaService,
     private readonly tagsService: TagsService,
     private readonly associatedImagesService: AssociatedImagesService,
+    private readonly salesService: SalesService,
+    private readonly copyAssociatedImagesService: CopyAssociatedImagesService,
   ) {}
-
-  private generateSku({ name, category }: GenerateSkuDto) {
-    const modelNumber = Math.ceil(Math.random() * 100000);
-    const suffix =
-      modelNumber < 10000 ? `0${modelNumber}` : modelNumber.toString();
-
-    const prefix = category.slice(0, 2);
-    const normalizedName = name.split(' ').join('_');
-    const sku = `${prefix}-${normalizedName}-${suffix}`;
-    return sku;
-  }
-
-  private buildFindQuery = ({
-    tagIds,
-    associatedImage,
-    ...findDto
-  }: FindDto) => {
-    let query = {};
-    for (const key in findDto) {
-      const value = findDto[key];
-      if (isNumber(value)) {
-        query = { ...query, [key]: value };
-      } else {
-        query = { ...query, [key]: new RegExp(value, 'i') };
-      }
-    }
-
-    let associatedImagesQuery = {};
-    if (associatedImage)
-      associatedImagesQuery = {
-        associatedImages: { some: { url: associatedImage } },
-      };
-
-    let tagQuery = {};
-    if (tagIds)
-      tagQuery = {
-        productsOnTags: { some: { AND: tagIds.map((tagId) => ({ tagId })) } },
-      };
-
-    return {
-      ...query,
-      ...associatedImagesQuery,
-      ...tagQuery,
-    };
-  };
 
   async findAll(findDto: FindDto = {}, { page = 1 }: FindQueryDto = {}) {
     const findQuery = this.buildFindQuery(findDto);
@@ -106,7 +69,7 @@ export class ProductsService {
         productsOnTags: true,
       },
     });
-    if (!product) throw new NotFoundException(getNotFoundMessage('product'));
+    if (!product) throw new NotFoundException(NOT_FOUND_MESSAGE('product'));
     return product;
   }
 
@@ -133,9 +96,7 @@ export class ProductsService {
         secondArray: productsWithUrl.associatedImages.map((image) => image.url),
       });
       const urls = operation.intersection();
-      throw new ConflictException(
-        `product with urls ${urls.join(' and ')} exists`,
-      );
+      throw new ConflictException(CONFLICT_PRODUCT_URL(urls));
     }
 
     const tags = await this.tagsService.findAllByIds(tagIds);
@@ -224,4 +185,79 @@ export class ProductsService {
     await this.findOneBySku(sku);
     return await this.prisma.product.delete({ where: { sku } });
   }
+
+  async sell(sku: string) {
+    const product = await this.findOneBySku(sku);
+    if (!product.stockQuantity)
+      throw new ConflictException(CONFLICT_NO_STOCK_QUANTITY);
+
+    const { associatedImages, productsOnTags, stockQuantity, ...restProduct } =
+      product;
+
+    await this.copyAssociatedImagesService.createIfNotExist({
+      associatedImages,
+    });
+
+    const copyAssociatedImages =
+      await this.copyAssociatedImagesService.findAllByUrls(
+        associatedImages.map(({ url }) => url),
+      );
+
+    const sale = await this.salesService.create({
+      copyAssociatedImages,
+      productsOnTags,
+      ...restProduct,
+    });
+
+    const updatedProduct = await this.update(product.sku, {
+      stockQuantity: stockQuantity - 1,
+    });
+
+    return { product: updatedProduct, sale };
+  }
+
+  private generateSku({ name, category }: GenerateSkuDto) {
+    const modelNumber = Math.ceil(Math.random() * 100000);
+    const suffix =
+      modelNumber < 10000 ? `0${modelNumber}` : modelNumber.toString();
+
+    const prefix = category.slice(0, 2);
+    const normalizedName = name.split(' ').join('_');
+    const sku = `${prefix}-${normalizedName}-${suffix}`;
+    return sku;
+  }
+
+  private buildFindQuery = ({
+    tagIds,
+    associatedImage,
+    ...findDto
+  }: FindDto) => {
+    let query = {};
+    for (const key in findDto) {
+      const value = findDto[key];
+      if (isNumber(value)) {
+        query = { ...query, [key]: value };
+      } else {
+        query = { ...query, [key]: new RegExp(value, 'i') };
+      }
+    }
+
+    let associatedImagesQuery = {};
+    if (associatedImage)
+      associatedImagesQuery = {
+        associatedImages: { some: { url: associatedImage } },
+      };
+
+    let tagQuery = {};
+    if (tagIds)
+      tagQuery = {
+        productsOnTags: { some: { AND: tagIds.map((tagId) => ({ tagId })) } },
+      };
+
+    return {
+      ...query,
+      ...associatedImagesQuery,
+      ...tagQuery,
+    };
+  };
 }
