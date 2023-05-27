@@ -1,9 +1,10 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { PermissionsService } from 'src/modules/permissions/permissions.service';
-import { RolesOnPermissionsService } from 'src/modules/roles-on-permissions/roles-on-permissions.service';
 import { RolesService } from 'src/modules/roles/roles.service';
 import { TagsService } from 'src/modules/tags/tags.service';
 import { UsersService } from 'src/modules/users/users.service';
+import { PrismaService } from 'src/shared/prisma/prisma.service';
+import { CreateDto } from './dtos/create.dto';
 
 @Injectable()
 export class LauncherService implements OnModuleInit {
@@ -13,12 +14,21 @@ export class LauncherService implements OnModuleInit {
     private readonly usersService: UsersService,
     private readonly rolesServices: RolesService,
     private readonly permissionsService: PermissionsService,
-    private readonly rolesOnPermissionsService: RolesOnPermissionsService,
     private readonly tagsService: TagsService,
+    private readonly prisma: PrismaService,
   ) {}
 
   async onModuleInit() {
     await Promise.all([this.generateInitialData(), this.generateTagsData()]);
+  }
+
+  private async createRolesOnPermissions({ permissionId, rolId }: CreateDto) {
+    return await this.prisma.rolesOnPermissions.create({
+      data: {
+        permissionId,
+        rolId,
+      },
+    });
   }
 
   private async generateTagsData() {
@@ -70,31 +80,31 @@ export class LauncherService implements OnModuleInit {
     const [adminRol, editorRol] = await Promise.all(rolesPromises);
 
     await Promise.all([
-      this.rolesOnPermissionsService.create({
+      this.createRolesOnPermissions({
         rolId: adminRol.id,
         permissionId: createProductPermission.id,
       }),
-      this.rolesOnPermissionsService.create({
+      this.createRolesOnPermissions({
         rolId: adminRol.id,
         permissionId: updateProductPermission.id,
       }),
-      this.rolesOnPermissionsService.create({
+      this.createRolesOnPermissions({
         rolId: adminRol.id,
         permissionId: deleteProductPermission.id,
       }),
-      this.rolesOnPermissionsService.create({
+      this.createRolesOnPermissions({
         rolId: adminRol.id,
         permissionId: sellProductPermission.id,
       }),
-      this.rolesOnPermissionsService.create({
+      this.createRolesOnPermissions({
         rolId: editorRol.id,
         permissionId: createProductPermission.id,
       }),
-      this.rolesOnPermissionsService.create({
+      this.createRolesOnPermissions({
         rolId: editorRol.id,
         permissionId: updateProductPermission.id,
       }),
-      this.rolesOnPermissionsService.create({
+      this.createRolesOnPermissions({
         rolId: editorRol.id,
         permissionId: deleteProductPermission.id,
       }),
