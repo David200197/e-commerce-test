@@ -1,8 +1,8 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { SalesService } from './sales.service';
-import { JwtAuthGuard } from 'src/common/guards/jwt.guard';
-import { PermissionsGuard } from 'src/common/guards/permissions.guard';
-import { FindQueryDto } from 'src/common/dtos/find-query.dto';
+import { JwtAuthGuard } from '@/common/guards/jwt.guard';
+import { PermissionsGuard } from '@/common/guards/permissions.guard';
+import { FindQueryDto } from '@/common/dtos/find-query.dto';
 
 @Controller('sales')
 export class SalesController {

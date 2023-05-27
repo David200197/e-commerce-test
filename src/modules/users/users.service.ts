@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { NOT_FOUND_MESSAGE } from 'src/common/messages/errors';
-import { PrismaService } from 'src/shared/prisma/prisma.service';
+import { NOT_FOUND_MESSAGE } from '@/common/messages/errors';
+import { PrismaService } from '@/shared/prisma/prisma.service';
 import { CreateDto } from './dtos/create.dto';
 import { randomUUID } from 'crypto';
 import { hash } from 'bcrypt';

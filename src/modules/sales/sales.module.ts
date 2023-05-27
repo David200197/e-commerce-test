@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SalesService } from './sales.service';
 import { SalesController } from './sales.controller';
-import { SharedModule } from 'src/shared/shared.module';
+import { SharedModule } from '@/shared/shared.module';
 
 @Module({
   imports: [SharedModule],

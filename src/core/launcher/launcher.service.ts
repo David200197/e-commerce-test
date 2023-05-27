@@ -1,9 +1,9 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { PermissionsService } from 'src/modules/permissions/permissions.service';
-import { RolesService } from 'src/modules/roles/roles.service';
-import { TagsService } from 'src/modules/tags/tags.service';
-import { UsersService } from 'src/modules/users/users.service';
-import { PrismaService } from 'src/shared/prisma/prisma.service';
+import { PermissionsService } from '@/modules/permissions/permissions.service';
+import { RolesService } from '@/modules/roles/roles.service';
+import { TagsService } from '@/modules/tags/tags.service';
+import { UsersService } from '@/modules/users/users.service';
+import { PrismaService } from '@/shared/prisma/prisma.service';
 import { CreateDto } from './dtos/create.dto';
 
 @Injectable()

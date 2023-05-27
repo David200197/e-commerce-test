@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { NOT_FOUND_MESSAGE } from 'src/common/messages/errors';
-import { PrismaService } from 'src/shared/prisma/prisma.service';
+import { NOT_FOUND_MESSAGE } from '@/common/messages/errors';
+import { PrismaService } from '@/shared/prisma/prisma.service';
 
 @Injectable()
 export class AssociatedImagesService {

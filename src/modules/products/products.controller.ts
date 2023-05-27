@@ -11,12 +11,12 @@ import {
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateDto } from './dtos/create.dto';
-import { JwtAuthGuard } from 'src/common/guards/jwt.guard';
-import { PermissionsGuard } from 'src/common/guards/permissions.guard';
+import { JwtAuthGuard } from '@/common/guards/jwt.guard';
+import { PermissionsGuard } from '@/common/guards/permissions.guard';
 import { ParamDto } from './dtos/param.dto';
 import { UpdateDto } from './dtos/update.dto';
 import { FindDto } from './dtos/find.dto';
-import { FindQueryDto } from 'src/common/dtos/find-query.dto';
+import { FindQueryDto } from '@/common/dtos/find-query.dto';
 
 @Controller('products')
 export class ProductsController {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/shared/prisma/prisma.service';
+import { PrismaService } from '@/shared/prisma/prisma.service';
 import { CreateDto } from './dtos/create.dto';
-import { SetOperation } from 'src/common/lib/set-operation.lib';
+import { SetOperation } from '@/common/lib/set-operation.lib';
 
 @Injectable()
 export class CopyAssociatedImagesService {

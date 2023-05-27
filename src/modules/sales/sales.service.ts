@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { DayjsFunction, InjestDayJs } from 'src/shared/dayjs';
-import { PrismaService } from 'src/shared/prisma/prisma.service';
+import { DayjsFunction, InjestDayJs } from '@/shared/dayjs';
+import { PrismaService } from '@/shared/prisma/prisma.service';
 import { CreateDto } from './dtos/create.dto';
-import { FindQueryDto } from 'src/common/dtos/find-query.dto';
-import { Paginator } from 'src/common/lib/paginator.lib';
+import { FindQueryDto } from '@/common/dtos/find-query.dto';
+import { Paginator } from '@/common/lib/paginator.lib';
 
 @Injectable()
 export class SalesService {

@@ -3,7 +3,7 @@ import {
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/shared/prisma/prisma.service';
+import { PrismaService } from '@/shared/prisma/prisma.service';
 import { GenerateSkuDto } from './dtos/generate-sku.dto';
 import { CreateDto } from './dtos/create.dto';
 import { TagsService } from '../tags/tags.service';
@@ -12,12 +12,12 @@ import {
   CONFLICT_NO_STOCK_QUANTITY,
   CONFLICT_PRODUCT_URL,
   NOT_FOUND_MESSAGE,
-} from 'src/common/messages/errors';
+} from '@/common/messages/errors';
 import { UpdateDto } from './dtos/update.dto';
-import { SetOperation } from 'src/common/lib/set-operation.lib';
+import { SetOperation } from '@/common/lib/set-operation.lib';
 import { FindDto } from './dtos/find.dto';
-import { FindQueryDto } from 'src/common/dtos/find-query.dto';
-import { Paginator } from 'src/common/lib/paginator.lib';
+import { FindQueryDto } from '@/common/dtos/find-query.dto';
+import { Paginator } from '@/common/lib/paginator.lib';
 import { isNumber } from 'class-validator';
 import { SalesService } from '../sales/sales.service';
 import { CopyAssociatedImagesService } from '../copy-associated-images/copy-associated-images.service';

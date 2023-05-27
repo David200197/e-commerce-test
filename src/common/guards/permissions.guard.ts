@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  CanActivate,
-  ExecutionContext,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { SetOperation } from '../lib/set-operation.lib';
 import { UserLogged } from '../interfaces/user-logged.interface';
@@ -22,7 +17,8 @@ export class PermissionsGuard implements CanActivate {
       firstArray: this.permissions,
       secondArray: userLoggedPermissions,
     });
-    if (!setOperation.hasDifference()) return true;
-    return false;
+
+    if (setOperation.hasDifference()) return false;
+    return true;
   }
 }

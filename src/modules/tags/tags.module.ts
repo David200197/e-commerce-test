@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TagsService } from './tags.service';
-import { SharedModule } from 'src/shared/shared.module';
+import { SharedModule } from '@/shared/shared.module';
 import { TagsController } from './tags.controller';
 
 @Module({
