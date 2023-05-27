@@ -22,6 +22,12 @@ import { FindQueryDto } from 'src/common/dtos/find-query.dto';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
+  @Get('without-stock-quantity')
+  @UseGuards(JwtAuthGuard)
+  async findWithoutStockQuantity(@Query() findQueryDto: FindQueryDto) {
+    return await this.productsService.findWithoutStockQuantity(findQueryDto);
+  }
+
   @Post('fetch')
   @UseGuards(JwtAuthGuard)
   async findAll(@Body() findDto: FindDto, @Query() findQueryDto: FindQueryDto) {

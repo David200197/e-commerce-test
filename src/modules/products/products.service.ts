@@ -61,6 +61,10 @@ export class ProductsService {
     });
   }
 
+  async findWithoutStockQuantity(findQueryDto: FindQueryDto = {}) {
+    return await this.findAll({ stockQuantity: 0 }, findQueryDto);
+  }
+
   async findOneBySku(sku: string) {
     const product = await this.prisma.product.findFirst({
       where: { sku },
@@ -99,7 +103,12 @@ export class ProductsService {
       throw new ConflictException(CONFLICT_PRODUCT_URL(urls));
     }
 
-    const tags = await this.tagsService.findAllByIds(tagIds);
+    let tags = [];
+    if (tagIds.length) {
+      tags = await this.tagsService.findAllByIds(tagIds);
+      if (!tags.length)
+        throw new NotFoundException(NOT_FOUND_MESSAGE('tagIds'));
+    }
 
     const product = await this.prisma.product.create({
       data: {
@@ -151,6 +160,8 @@ export class ProductsService {
     let tagQuery = {};
     if (tagIds) {
       const tags = await this.tagsService.findAllByIds(tagIds);
+      if (!tags.length)
+        throw new NotFoundException(NOT_FOUND_MESSAGE('tagIds'));
 
       await this.prisma.productsOnTags.deleteMany({
         where: {

@@ -3,6 +3,8 @@ import { randomUUID } from 'crypto';
 import { DayjsFunction, InjestDayJs } from 'src/shared/dayjs';
 import { PrismaService } from 'src/shared/prisma/prisma.service';
 import { CreateDto } from './dtos/create.dto';
+import { FindQueryDto } from 'src/common/dtos/find-query.dto';
+import { Paginator } from 'src/common/lib/paginator.lib';
 
 @Injectable()
 export class SalesService {
@@ -11,6 +13,29 @@ export class SalesService {
     private readonly dayjs: DayjsFunction,
     private readonly prisma: PrismaService,
   ) {}
+
+  async findAll({ page = 1 }: FindQueryDto) {
+    const perPage = 10;
+    const paginator = new Paginator({ perPage, page });
+    const sales = await this.prisma.sales.findMany({
+      skip: paginator.skip,
+      take: paginator.take,
+      include: {
+        salesOnTags: true,
+        salesOnCopyAssociatedImage: true,
+      },
+    });
+    const totalElement = await this.prisma.sales.count();
+    const totalPage = paginator.getTotalPage(totalElement);
+    return { sales, page, totalElement, totalPage, perPage };
+  }
+
+  async getTotalAmount() {
+    const {
+      _sum: { price },
+    } = await this.prisma.sales.aggregate({ _sum: { price: true } });
+    return price;
+  }
 
   async create({
     copyAssociatedImages: associatedImages,
@@ -36,8 +61,9 @@ export class SalesService {
           })),
         },
         salesOnTags: {
-          create: productsOnTags.map(({ tagId }) => ({
-            tagId,
+          connectOrCreate: productsOnTags.map(({ tagId }) => ({
+            where: { tagId_salesId: { salesId, tagId } },
+            create: { tagId },
           })),
         },
         ...restProduct,

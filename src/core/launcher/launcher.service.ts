@@ -64,6 +64,8 @@ export class LauncherService implements OnModuleInit {
       'update_product',
       'delete_product',
       'sell_product',
+      'get_items_sold',
+      'get_total_amount',
     ].map((name) => this.permissionsService.create({ name }));
 
     const [
@@ -71,6 +73,8 @@ export class LauncherService implements OnModuleInit {
       updateProductPermission,
       deleteProductPermission,
       sellProductPermission,
+      getItemSoldProductPermission,
+      getAmountTotalProductPermission,
     ] = await Promise.all(permissionPromises);
 
     const rolesPromises = ['administrador', 'editor'].map((name) =>
@@ -95,6 +99,14 @@ export class LauncherService implements OnModuleInit {
       this.createRolesOnPermissions({
         rolId: adminRol.id,
         permissionId: sellProductPermission.id,
+      }),
+      this.createRolesOnPermissions({
+        rolId: adminRol.id,
+        permissionId: getItemSoldProductPermission.id,
+      }),
+      this.createRolesOnPermissions({
+        rolId: adminRol.id,
+        permissionId: getAmountTotalProductPermission.id,
       }),
       this.createRolesOnPermissions({
         rolId: editorRol.id,
