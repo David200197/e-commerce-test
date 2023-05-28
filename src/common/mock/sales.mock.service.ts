@@ -9,4 +9,8 @@ export class SalesMockService {
   getTotalAmount() {
     return 0;
   }
+
+  create() {
+    return {};
+  }
 }

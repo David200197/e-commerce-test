@@ -17,6 +17,10 @@ export class PrismaMethods<Elements> {
     return this.elements;
   }
 
+  update() {
+    return this.elements;
+  }
+
   count() {
     return this.elements.length;
   }

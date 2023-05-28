@@ -227,7 +227,7 @@ export class ProductsService {
     return { product: updatedProduct, sale };
   }
 
-  private generateSku({ name, category }: GenerateSkuDto) {
+  generateSku({ name, category }: GenerateSkuDto) {
     const modelNumber = Math.ceil(Math.random() * 100000);
     const suffix =
       modelNumber < 10000 ? `0${modelNumber}` : modelNumber.toString();
@@ -238,11 +238,7 @@ export class ProductsService {
     return sku;
   }
 
-  private buildFindQuery = ({
-    tagIds,
-    associatedImage,
-    ...findDto
-  }: FindDto) => {
+  buildFindQuery({ tagIds, associatedImage, ...findDto }: FindDto) {
     let query = {};
     for (const key in findDto) {
       const value = findDto[key];
@@ -270,5 +266,5 @@ export class ProductsService {
       ...associatedImagesQuery,
       ...tagQuery,
     };
-  };
+  }
 }
