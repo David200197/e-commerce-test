@@ -93,11 +93,11 @@ export class ProductsService {
 
   async create({ tagIds, urlAssociatedImages, ...dto }: CreateDto) {
     const sku = this.generateSku({ name: dto.name, category: dto.category });
-    const productsWithUrl = await this.findByOneUrls(urlAssociatedImages);
-    if (productsWithUrl) {
+    const productWithUrl = await this.findByOneUrls(urlAssociatedImages);
+    if (productWithUrl) {
       const operation = new SetOperation({
         firstArray: urlAssociatedImages,
-        secondArray: productsWithUrl.associatedImages.map((image) => image.url),
+        secondArray: productWithUrl.associatedImages.map((image) => image.url),
       });
       const urls = operation.intersection();
       throw new ConflictException(CONFLICT_PRODUCT_URL(urls));
@@ -106,9 +106,9 @@ export class ProductsService {
     let tags = [];
     if (tagIds.length) {
       tags = await this.tagsService.findAllByIds(tagIds);
-      if (!tags.length)
-        throw new NotFoundException(NOT_FOUND_MESSAGE('tagIds'));
     }
+    if (tagIds.length && !tags.length)
+      throw new NotFoundException(NOT_FOUND_MESSAGE('tagIds'));
 
     const product = await this.prisma.product.create({
       data: {
@@ -157,12 +157,15 @@ export class ProductsService {
       };
     }
 
+    let tags = [];
     let tagQuery = {};
     if (tagIds) {
-      const tags = await this.tagsService.findAllByIds(tagIds);
-      if (!tags.length)
-        throw new NotFoundException(NOT_FOUND_MESSAGE('tagIds'));
-
+      tags = await this.tagsService.findAllByIds(tagIds);
+    }
+    if (tagIds && !tags.length) {
+      throw new NotFoundException(NOT_FOUND_MESSAGE('tagIds'));
+    }
+    if (tagIds) {
       await this.prisma.productsOnTags.deleteMany({
         where: {
           OR: productsOnTags.map(({ tagId }) => ({
