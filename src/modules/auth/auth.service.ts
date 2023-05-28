@@ -8,6 +8,10 @@ import { UsersService } from '@/modules/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { UserLogged } from '../../common/interfaces/user-logged.interface';
+import {
+  INVALID_CREDENTIALS,
+  USER_IS_UNAUTHORIZED,
+} from '@/common/messages/errors';
 
 @Injectable()
 export class AuthService {
@@ -25,11 +29,11 @@ export class AuthService {
   async login({ email, password }: LoginDto) {
     const user = await this.usersService.findOne({ email }).catch((error) => {
       if (error instanceof NotFoundException)
-        throw new UnauthorizedException('invalid credentials');
+        throw new UnauthorizedException(INVALID_CREDENTIALS);
       throw error;
     });
     const isValid = await bcrypt.compare(password, user.password);
-    if (!isValid) throw new UnauthorizedException('user is unauthorized');
+    if (!isValid) throw new UnauthorizedException(USER_IS_UNAUTHORIZED);
 
     const permissions =
       user?.rol?.rolesOnPermissions?.map(({ permission }) => permission.name) ||

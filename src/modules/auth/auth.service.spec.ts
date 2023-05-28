@@ -7,6 +7,10 @@ import { UsersMockService } from '@/common/mock/users.mock.service';
 import { JwtService } from '@nestjs/jwt';
 import { JwtMockService } from '@/common/mock/jwt.mock.service';
 import bcrypt from 'bcrypt';
+import {
+  INVALID_CREDENTIALS,
+  USER_IS_UNAUTHORIZED,
+} from '@/common/messages/errors';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -89,7 +93,7 @@ describe('AuthService', () => {
       const resultFn = jest.fn(async () => {
         await service.login({ email: 'email', password: 'password' });
       });
-      expect(resultFn).rejects.toThrow('invalid credentials');
+      expect(resultFn).rejects.toThrow(INVALID_CREDENTIALS);
       user.changeHasData(true);
     });
 
@@ -98,7 +102,7 @@ describe('AuthService', () => {
       const resultFn = jest.fn(async () => {
         await service.login({ email: 'email', password: 'password' });
       });
-      expect(resultFn).rejects.toThrow('user is unauthorized');
+      expect(resultFn).rejects.toThrow(USER_IS_UNAUTHORIZED);
     });
   });
 });
