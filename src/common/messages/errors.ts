@@ -7,3 +7,4 @@ export const CONFLICT_PRODUCT_URL = (urls: string[]) =>
 export const CONFLICT_NO_STOCK_QUANTITY = `the product's stock quantity can not be 0`;
 export const INVALID_CREDENTIALS = 'invalid credentials';
 export const USER_IS_UNAUTHORIZED = 'user is unauthorized';
+export const USER_EXIST = 'the email exist in the database';

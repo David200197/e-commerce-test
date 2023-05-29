@@ -12,6 +12,7 @@ import {
   INVALID_CREDENTIALS,
   USER_IS_UNAUTHORIZED,
 } from '@/common/messages/errors';
+import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
@@ -46,6 +47,10 @@ export class AuthService {
       email: user.email,
       permissions,
     });
-    return { user, accessToken, permissions };
+    return { user, accessToken };
+  }
+
+  async register(registerDto: RegisterDto) {
+    await this.usersService.create(registerDto);
   }
 }

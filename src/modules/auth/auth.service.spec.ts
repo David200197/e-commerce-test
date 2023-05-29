@@ -72,7 +72,6 @@ describe('AuthService', () => {
           id: undefined,
           permissions: ['permission1', 'permission2', 'permission3'],
         },
-        permissions: ['permission1', 'permission2', 'permission3'],
         user: {
           email: 'david.alfonso@gmail.com',
           name: 'David',

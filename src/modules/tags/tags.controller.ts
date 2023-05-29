@@ -7,6 +7,7 @@ export class TagsController {
 
   @Get()
   async findAll() {
-    return await this.tagsService.findAll();
+    const tags = await this.tagsService.findAll();
+    return { tags };
   }
 }

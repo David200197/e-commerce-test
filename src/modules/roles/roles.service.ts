@@ -16,4 +16,8 @@ export class RolesService {
       data: { id: randomUUID(), name },
     });
   }
+
+  async findAll() {
+    return await this.prisma.rol.findMany();
+  }
 }
