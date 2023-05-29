@@ -34,11 +34,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const bootstrap = async () => {\r",
-									"    const { accessToken } = await pm.response.json()\r",
-									"    pm.collectionVariables.set(\"accessToken\", accessToken)\r",
-									"}\r",
-									"bootstrap()"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -121,7 +117,7 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"console.log(pm.response)"
+							""
 						]
 					}
 				}
@@ -159,7 +155,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Juguete de superman\",\r\n    \"price\": 10,\r\n    \"stockQuantity\": 30,\r\n    \"category\": \"Juguete\",\r\n    \"tagIds\": [\r\n        \"7e4a7ddf-4930-425e-9d19-494abeb16b88\"\r\n    ],\r\n    \"additionalInformation\": \"Contiene un botón para iluminar con un bombillo verde\",\r\n    \"assessment\": 9,\r\n    \"description\": \"Juguete de superman versión DC\",\r\n    \"urlAssociatedImages\": [\r\n        \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fpy.ebay.com%2Fb%2FSuperhero-Superman-Comic-Book-Heroes-Action-Figures%2F261068%2Fbn_86027511&psig=AOvVaw03bE-sKqHiRSP9BgiXwgI-&ust=1685196966276000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLCLjtSVk_8CFQAAAAAdAAAAABAE\",\r\n        \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.alykids.com.ar%2Fproductos%2Fjuegos-y-juguetes-superman-gigante%2F&psig=AOvVaw03bE-sKqHiRSP9BgiXwgI-&ust=1685196966276000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLCLjtSVk_8CFQAAAAAdAAAAABAJ\",\r\n        \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fjuguetesdecoleccion.com%2Fmunecos-de-superman%2F2390%2F&psig=AOvVaw03bE-sKqHiRSP9BgiXwgI-&ust=1685196966276000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLCLjtSVk_8CFQAAAAAdAAAAABAZ\"\r\n    ]\r\n}",
+							"raw": "{\r\n    \"name\": \"Superman\",\r\n    \"price\": 20,\r\n    \"stockQuantity\": 30,\r\n    \"category\": \"Superheroe\",\r\n    \"tagIds\": [\r\n        \"f4a7f46d-0df5-473d-b845-74e1529ed4ef\"\r\n    ],\r\n    \"additionalInformation\": \"superman con capa\",\r\n    \"assessment\": 8,\r\n    \"description\": \"Superman de DC\",\r\n    \"urlAssociatedImages\": [\r\n        \"https://superman.jpg\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -203,7 +199,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Juguete de superman marvel\",\r\n    \"tagIds\": [\r\n        \"7e4a7ddf-4930-425e-9d19-494abeb16b88\"\r\n    ]\r\n}",
+							"raw": "{\r\n    \"name\": \"Juguete de superman marvel\",\r\n    \"tagIds\": [\r\n        \"f4a7f46d-0df5-473d-b845-74e1529ed4ef\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -211,13 +207,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{API}}/products/Ju-Juguete_de_superman-19015",
+							"raw": "{{API}}/products/Ju-Juguete_de_superman-17539",
 							"host": [
 								"{{API}}"
 							],
 							"path": [
 								"products",
-								"Ju-Juguete_de_superman-19015"
+								"Ju-Juguete_de_superman-17539"
 							]
 						}
 					},
@@ -229,13 +225,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API}}/products/Ju-Juguete_de_superman-66120",
+							"raw": "{{API}}/products/Ju-Juguete_de_superman-17539",
 							"host": [
 								"{{API}}"
 							],
 							"path": [
 								"products",
-								"Ju-Juguete_de_superman-66120"
+								"Ju-Juguete_de_superman-17539"
 							]
 						}
 					},
@@ -510,7 +506,86 @@
 				},
 				{
 					"name": "products",
-					"item": []
+					"item": [
+						{
+							"name": "add-shoe",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Zapato de Vaquero\",\r\n    \"price\": 16,\r\n    \"stockQuantity\": 20,\r\n    \"category\": \"Zapato\",\r\n    \"tagIds\": [\r\n        \"8a5755bc-8daf-472c-ad99-863a7fd24dff\"\r\n    ],\r\n    \"additionalInformation\": \"Ninguna\",\r\n    \"assessment\": 6,\r\n    \"description\": \"Son unos zapatos de vaquero\",\r\n    \"urlAssociatedImages\": [\r\n        \"https://zapato.jpg\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API}}/products",
+									"host": [
+										"{{API}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add-books",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Libro para niños\",\r\n    \"price\": 12,\r\n    \"stockQuantity\": 15,\r\n    \"category\": \"Libro\",\r\n    \"tagIds\": [\r\n        \"9858e218-687b-4c2d-9292-8927c67bd3a2\"\r\n    ],\r\n    \"additionalInformation\": \"Ninguna\",\r\n    \"assessment\": 9,\r\n    \"description\": \"Libro para niños\",\r\n    \"urlAssociatedImages\": [\r\n        \"https://libro.jpg\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API}}/products",
+									"host": [
+										"{{API}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add-clothes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Ropa para niños\",\r\n    \"price\": 12,\r\n    \"stockQuantity\": 15,\r\n    \"category\": \"Ropa\",\r\n    \"tagIds\": [\r\n        \"0aab888f-b5e3-492d-9a01-dd3747cdb4bd\"\r\n    ],\r\n    \"additionalInformation\": \"Ninguna\",\r\n    \"assessment\": 9,\r\n    \"description\": \"Ropa para niños\",\r\n    \"urlAssociatedImages\": [\r\n        \"https://ropa.jpg\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API}}/products",
+									"host": [
+										"{{API}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -564,7 +639,13 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					""
+					"const bootstrap = async () => {",
+					"    const api = pm.request.url.path.join('/')",
+					"    if (api !== \"api/auth/login\") return",
+					"    const { accessToken } = await pm.response.json()",
+					"    pm.collectionVariables.set(\"accessToken\", accessToken)",
+					"}",
+					"bootstrap()"
 				]
 			}
 		}
