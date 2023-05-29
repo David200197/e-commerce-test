@@ -153,7 +153,7 @@ Si está utilizando POSTMAN, puede usar las herramientas disponibles para agrega
 
 <img src="./docs/001.png" ></img>
 
-Es importante tener en cuenta que el token de acceso tiene una duración limitada. En este caso, el token expira después de 30 minutos. Puede encontrar esta información en el archivo "auth.module.ts" en la línea que contiene "expiresIn" (línea 19).
+Es importante tener en cuenta que el token de acceso tiene una duración limitada. En este caso, el token expira después de 30 minutos. Puede encontrar esta información en el archivo ``src/modules/auth/auth.module.ts`` en la línea que contiene "expiresIn" (línea 19).
 
 ```typescript
 import { forwardRef, Module } from '@nestjs/common';
@@ -202,7 +202,7 @@ La respuesta contendrá un arreglo de roles, cada uno compuesto por su ID y su n
 
 En el cuerpo de la solicitud, debe incluir el correo electrónico, el nombre y la contraseña del usuario. También puede incluir el ID del rol del usuario si es necesario. Si la solicitud es exitosa, recibirá un mensaje de confirmación. Tenga en cuenta que existen validaciones para los campos de correo electrónico, nombre y contraseña.
 
-###### Para obtener los datos del usuario authenricado
+###### Para obtener los datos del usuario authenticado
 
 ``GET - http://localhost:3000/api/auth/me``
 
@@ -257,7 +257,7 @@ Para crear un producto, es necesario enviar una solicitud POST al endpoint http:
 - description: una descripción detallada del producto.
 - urlAssociatedImages: un arreglo de URLs de imágenes asociadas al productos
 
-si los IDs de los tags no existen, se producirá un error.Para poder obtener los tags existentes, puede auxiliarse del siguiente enpoint: ``GET - http://localhost:3000/api/tags``
+si los IDs de los tags no existen, se producirá un error. Para poder obtener los tags existentes, puede auxiliarse del siguiente enpoint: ``GET - http://localhost:3000/api/tags``
 
 ###### Actualizar un Producto
 
@@ -352,7 +352,7 @@ POST      -http://localhost:3000/api/products/sell/:sku
 RESPONSE  -message: mensaje de confirmación
 
 ERRORS    -si el campo stockQuantity es 0, no permite vender
-	  -el producto no se encuentra
+	  -el producto debe existir en la base de datos
 ```
 
 ##### 6 - Endpoint que permita mostrar la lista de artículos vendidos.
@@ -380,6 +380,8 @@ RESPONSE  -sales: total de ventas filtradas
 ##### Respuesta:
 
 Para poder ver la ganancia total de ventas, el usuario necesita tener el permiso "get_total_amount" incluido en su rol correspondiente.
+
+<img src="./docs/011.png" ></img>
 
 ```text
 GET       -http://localhost:3000/api/sales/total_amount
@@ -416,7 +418,7 @@ RESPONSE  -products: total de productos filtrados con 0 stock
 - src: esta carpeta contiene la lógica de negocio de la aplicación.
   - common: en esta carpeta, se encuentran los servicios comunes del proyecto, como guards, mocks, utils, interfaces, libs, entre otros.
   - shared: aquí se encuentran los módulos auxiliares reutilizables.
-  - config: esta carpeta contiene el módulo de configuración, donde se configura la base de datos, la autenticación y otros aspectos importantes.
+  - config: esta carpeta contiene el módulo de configuración.
   - modules: aquí se encuentran los módulos que manejan la lógica de negocio.
   - core: esta carpeta contiene los módulos principales del sistema.
 - test: contiene las pruebas end-to-end (e2e) de la aplicación.
@@ -427,14 +429,14 @@ RESPONSE  -products: total de productos filtrados con 0 stock
 
 ### Launcher.service.ts
 
-El archivo launcher.service.ts, que se encuentra en la ruta src/core/launcher/, es responsable de inicializar la base de datos si se detecta que está vacía. Este servicio se activa automáticamente cuando se inicia el servidor y se encarga de guardar los datos necesarios para el funcionamiento de la aplicación, incluso aquellos que no tienen endpoints asociados.
+El archivo launcher.service.ts, que se encuentra en la ruta ``src/core/launcher/launcher.service.ts``, es responsable de inicializar la base de datos si se detecta que está vacía. Este servicio se activa automáticamente cuando se inicia el servidor y se encarga de guardar los datos necesarios para el funcionamiento de la aplicación, incluso aquellos que no tienen endpoints asociados.
 
 ### Postman
 
 Para utilizar Postman, puede importar el archivo doc.postman.json que se encuentra en la ruta postman/doc.postman.json. Asegúrese de seguir las instrucciones adecuadas al importar el archivo para que pueda aprovechar todas las funcionalidades de manera efectiva en su proyecto. A continuación, algunas características sobre su uso:
 
 - Puedes utilizar el conjunto de "helpers" de Postman para utilizar endpoints ya creados.
-- En el endpoint http://localhost:3000/api/auth/login, un script que se encarga de establecer automáticamente el accessToken, lo cual evita la necesidad de manejarlo manualmente.
+- En el endpoint ``http://localhost:3000/api/auth/login``, existe un script que se encarga de establecer automáticamente el accessToken, lo cual evita la necesidad de manejarlo manualmente.
 
 ## Autor
 
