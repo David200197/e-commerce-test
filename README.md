@@ -245,7 +245,7 @@ Esto significa que cualquier usuario puede obtener un producto utilizando su "sk
 
 ###### Crear un Producto
 
-Para crear un producto, es necesario enviar una solicitud POST al endpoint http://localhost:3000/products con las siguientes propiedades en el cuerpo de la solicitud:
+Para crear un producto, es necesario enviar una solicitud POST al endpoint http://localhost:3000/api/products con las siguientes propiedades en el cuerpo de la solicitud:
 
 - name: el nombre del producto.
 - price: el precio del producto.
@@ -257,11 +257,11 @@ Para crear un producto, es necesario enviar una solicitud POST al endpoint http:
 - description: una descripción detallada del producto.
 - urlAssociatedImages: un arreglo de URLs de imágenes asociadas al productos
 
-si los IDs de los tags no existen, se producirá un error.Para poder obtener los tags existentes, puede auxiliarse del siguiente enpoint: ``GET - http://localhost:3000/tags``
+si los IDs de los tags no existen, se producirá un error.Para poder obtener los tags existentes, puede auxiliarse del siguiente enpoint: ``GET - http://localhost:3000/api/tags``
 
 ###### Actualizar un Producto
 
-Para actualizar un producto, es necesario enviar una solicitud PUT al endpoint http://localhost:3000/products con las siguientes propiedades en el cuerpo de la solicitud:
+Para actualizar un producto, es necesario enviar una solicitud PUT al endpoint http://localhost:3000/api/products con las siguientes propiedades en el cuerpo de la solicitud:
 
 - name: el nombre del producto.
 - price: el precio del producto.
@@ -279,7 +279,7 @@ si los IDs de los tags proporcionados no existen en la base de datos, se generar
 
 ###### Eliminar un Producto
 
-Si desea eliminar un producto específico, debe enviar una solicitud DELETE al endpoint ``http://localhost:3000/products/:sku``, donde :sku es el sku del producto que desea eliminar. Si el sku proporcionado no se encuentra en la base de datos, se generará un error.
+Si desea eliminar un producto específico, debe enviar una solicitud DELETE al endpoint ``http://localhost:3000/api/products/:sku``, donde :sku es el sku del producto que desea eliminar. Si el sku proporcionado no se encuentra en la base de datos, se generará un error.
 
 ##### 3 - Endpoint sobre resultados de busqueda
 
@@ -431,7 +431,10 @@ El archivo launcher.service.ts, que se encuentra en la ruta src/core/launcher/, 
 
 ### Postman
 
-Para utilizar Postman, puede importar el archivo doc.postman.json que se encuentra en la ruta postman/doc.postman.json. Asegúrese de seguir las instrucciones adecuadas al importar el archivo para que pueda aprovechar todas las funcionalidades de manera efectiva en su proyecto. Para agilizar las consultas, puede utilizar el conjunto de "helpers" de Postman para utilizar endpoints ya creados
+Para utilizar Postman, puede importar el archivo doc.postman.json que se encuentra en la ruta postman/doc.postman.json. Asegúrese de seguir las instrucciones adecuadas al importar el archivo para que pueda aprovechar todas las funcionalidades de manera efectiva en su proyecto. A continuación, algunas características sobre su uso:
+
+- Puedes utilizar el conjunto de "helpers" de Postman para utilizar endpoints ya creados.
+- En el endpoint http://localhost:3000/api/auth/login, un script que se encarga de establecer automáticamente el accessToken, lo cual evita la necesidad de manejarlo manualmente.
 
 ## Autor
 

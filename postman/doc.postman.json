@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "1361c37a-676f-4a16-a6f6-9595ccb3db1d",
+		"_postman_id": "2ce2e650-dcdb-4113-877c-f3927566330b",
 		"name": "EcomerceTest",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24134091"
 	},
 	"item": [
 		{
@@ -28,6 +29,30 @@
 				},
 				{
 					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const bootstrap = async () => {\r",
+									"    const { accessToken } = await pm.response.json()\r",
+									"    pm.collectionVariables.set(\"accessToken\", accessToken)\r",
+									"}\r",
+									"bootstrap()"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -79,6 +104,26 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"console.log(pm.response)"
+						]
+					}
 				}
 			]
 		},
@@ -349,6 +394,17 @@
 					"item": [
 						{
 							"name": "login-editor",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -376,6 +432,17 @@
 						},
 						{
 							"name": "login-admin",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -403,6 +470,17 @@
 						},
 						{
 							"name": "login-normal-user",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -429,6 +507,10 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "products",
+					"item": []
 				}
 			]
 		},
@@ -460,7 +542,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQwMGIxZjA0LWUzNmUtNDQzZi1iZjRmLTk3NmZiYzQ0MGVjNiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlX3Byb2R1Y3QiLCJzZWxsX3Byb2R1Y3QiLCJnZXRfbm9fc3RvY2siLCJ1cGRhdGVfcHJvZHVjdCIsImdldF9pdGVtc19zb2xkIiwiY3JlYXRlX3Byb2R1Y3QiLCJnZXRfdG90YWxfYW1vdW50Il0sImlhdCI6MTY4NTMzNDU3OCwiZXhwIjoxNjg1MzM2Mzc4fQ.QoPl7cwnr-PO7bdalUaxcDkratese8gbGWRAMeuKbog",
+				"value": "{{accessToken}}",
 				"type": "string"
 			}
 		]
@@ -471,7 +553,9 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					""
+					"const API = pm.collectionVariables.get(\"API\")",
+					"if(API) return",
+					"pm.collectionVariables.set(\"API\", \"http://localhost:3000/api\")"
 				]
 			}
 		},
@@ -488,7 +572,11 @@
 	"variable": [
 		{
 			"key": "API",
-			"value": "http://localhost:3000/api"
+			"value": ""
+		},
+		{
+			"key": "accessToken",
+			"value": ""
 		}
 	]
 }
