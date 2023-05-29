@@ -1,0 +1,494 @@
+{
+	"info": {
+		"_postman_id": "1361c37a-676f-4a16-a6f6-9595ccb3db1d",
+		"name": "EcomerceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/auth/me",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"david.alfonso@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API}}/auth/login",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"david.alfonso@gmail.com\",\r\n    \"name\": \"David\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API}}/auth/register",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tags",
+			"item": [
+				{
+					"name": "tags",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/tags",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Juguete de superman\",\r\n    \"price\": 10,\r\n    \"stockQuantity\": 30,\r\n    \"category\": \"Juguete\",\r\n    \"tagIds\": [\r\n        \"7e4a7ddf-4930-425e-9d19-494abeb16b88\"\r\n    ],\r\n    \"additionalInformation\": \"Contiene un botón para iluminar con un bombillo verde\",\r\n    \"assessment\": 9,\r\n    \"description\": \"Juguete de superman versión DC\",\r\n    \"urlAssociatedImages\": [\r\n        \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fpy.ebay.com%2Fb%2FSuperhero-Superman-Comic-Book-Heroes-Action-Figures%2F261068%2Fbn_86027511&psig=AOvVaw03bE-sKqHiRSP9BgiXwgI-&ust=1685196966276000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLCLjtSVk_8CFQAAAAAdAAAAABAE\",\r\n        \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.alykids.com.ar%2Fproductos%2Fjuegos-y-juguetes-superman-gigante%2F&psig=AOvVaw03bE-sKqHiRSP9BgiXwgI-&ust=1685196966276000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLCLjtSVk_8CFQAAAAAdAAAAABAJ\",\r\n        \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fjuguetesdecoleccion.com%2Fmunecos-de-superman%2F2390%2F&psig=AOvVaw03bE-sKqHiRSP9BgiXwgI-&ust=1685196966276000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLCLjtSVk_8CFQAAAAAdAAAAABAZ\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API}}/products",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/products/Ju-Juguete_de_superman-19015",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"products",
+								"Ju-Juguete_de_superman-19015"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Juguete de superman marvel\",\r\n    \"tagIds\": [\r\n        \"7e4a7ddf-4930-425e-9d19-494abeb16b88\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API}}/products/Ju-Juguete_de_superman-19015",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"products",
+								"Ju-Juguete_de_superman-19015"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/products/Ju-Juguete_de_superman-66120",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"products",
+								"Ju-Juguete_de_superman-66120"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetch",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"superman\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API}}/products/fetch?page=1",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"products",
+								"fetch"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "total-element",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"superman\",\r\n    \"price\": 10,\r\n    \"tagIds\": [\"e0ed5421-1272-4153-b392-3b61db91efab\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API}}/products/total-element",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"products",
+								"total-element"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sell",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/products/sell/Ju-Juguete_de_superman-66120",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"products",
+								"sell",
+								"Ju-Juguete_de_superman-66120"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "without-stock-quantity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/products/without-stock-quantity",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"products",
+								"without-stock-quantity"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sales",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/sales?page=1",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"sales"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "total_amount",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/sales/total_amount",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"sales",
+								"total_amount"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "helpers",
+			"item": [
+				{
+					"name": "login",
+					"item": [
+						{
+							"name": "login-editor",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"editor@gmail.com\",\r\n    \"password\":\"secret\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API}}/auth/login",
+									"host": [
+										"{{API}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login-admin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\":\"secret\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API}}/auth/login",
+									"host": [
+										"{{API}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login-normal-user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"user@gmail.com\",\r\n    \"password\":\"secret\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{API}}/auth/login",
+									"host": [
+										"{{API}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "roles",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/roles",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQwMGIxZjA0LWUzNmUtNDQzZi1iZjRmLTk3NmZiYzQ0MGVjNiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlX3Byb2R1Y3QiLCJzZWxsX3Byb2R1Y3QiLCJnZXRfbm9fc3RvY2siLCJ1cGRhdGVfcHJvZHVjdCIsImdldF9pdGVtc19zb2xkIiwiY3JlYXRlX3Byb2R1Y3QiLCJnZXRfdG90YWxfYW1vdW50Il0sImlhdCI6MTY4NTMzNDU3OCwiZXhwIjoxNjg1MzM2Mzc4fQ.QoPl7cwnr-PO7bdalUaxcDkratese8gbGWRAMeuKbog",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API",
+			"value": "http://localhost:3000/api"
+		}
+	]
+}
