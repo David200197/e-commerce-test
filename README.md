@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Un ejemplo de e-commerce orientado a demostrar habilidades como backend developer
+Un ejemplo de e-commerce orientado a demostrar habilidades como backend developer.
 
 ## Tecnologías
 
@@ -145,15 +145,17 @@ usuario y debe tener una vigencia máxima de 30 minutos.
 
 ##### Respuesta:
 
-Para obtener el token de un usuario, primero debe iniciar sesión en el sistema. Luego, debe obtener el token de acceso de la respuesta y utilizarlo en los demás endpoints a través de la cabecera "Authorization". Para hacerlo, debe incluir la cadena "Bearer" seguida del token en la cabecera de la siguiente manera:
+Para obtener el token de un usuario, primero se debe iniciar sesión en el sistema. Luego se obtiene el token de acceso de la
+respuesta para utilizarlo en los demás endpoints, mediante la cabecera "Authorization". Se debe incluir la cadena "Bearer" seguido
+del token en la cabecera de la siguiente manera:
 
 `Authorization: Bearer <token>`
 
-Si está utilizando POSTMAN, puede usar las herramientas disponibles para agregar esta cabecera a sus solicitudes.
+Si se está utilizando POSTMAN, se puede usar las herramientas disponibles para agregar esta cabecera a sus solicitudes.
 
 <img src="./docs/001.png" ></img>
 
-Es importante tener en cuenta que el token de acceso tiene una duración limitada. En este caso, el token expira después de 30 minutos. Puede encontrar esta información en el archivo ``src/modules/auth/auth.module.ts`` en la línea que contiene "expiresIn" (línea 19).
+Es importante tener en cuenta que el token de acceso tiene una duración limitada. En este caso, el token expira después de 30 minutos. Se puede encontrar esta información en el archivo ``src/modules/auth/auth.module.ts`` en la línea que contiene "expiresIn" (línea 19).
 
 ```typescript
 import { forwardRef, Module } from '@nestjs/common';
@@ -188,21 +190,21 @@ export class AuthModule {}
 
 ``POST - http://localhost:3000/api/auth/login``
 
-En el cuerpo de la solicitud, debe incluir el correo electrónico y la contraseña del usuario. Si la solicitud es exitosa, recibirá una respuesta que contiene los datos generales del usuario (excepto la contraseña) y el token de acceso.
+En el cuerpo de la solicitud, se debe incluir el correo electrónico y la contraseña del usuario. Si la solicitud es exitosa,  se recibirá una respuesta que contiene los datos generales del usuario (excepto la contraseña) y el token de acceso.
 
-###### Para obtener todos los roles, debe utilizar el siguiente endpoint:
+###### Para obtener todos los roles, se debe utilizar el siguiente endpoint:
 
 ``GET - http://localhost:3000/api/roles``
 
-La respuesta contendrá un arreglo de roles, cada uno compuesto por su ID y su nombre.
+La respuesta contendrá un arreglo de roles, cada uno compuesto por su id y su nombre.
 
-###### Para registrar un usuario en el sistema, debe utilizar el siguiente endpoint:
+###### Para registrar un usuario en el sistema, se debe utilizar el siguiente endpoint:
 
 ``POST - http://localhost:3000/api/auth/register``
 
-En el cuerpo de la solicitud, debe incluir el correo electrónico, el nombre y la contraseña del usuario. También puede incluir el ID del rol del usuario si es necesario. Si la solicitud es exitosa, recibirá un mensaje de confirmación. Tenga en cuenta que existen validaciones para los campos de correo electrónico, nombre y contraseña.
+En el cuerpo de la solicitud, se debe incluir el correo electrónico, el nombre y la contraseña del usuario. También se puede incluir el id del rol del usuario si es necesario. Si la solicitud es exitosa, se recibirá un mensaje de confirmación. Tenga en cuenta que existen validaciones para los campos de correo electrónico, nombre y contraseña.
 
-###### Para obtener los datos del usuario authenticado
+###### Para obtener los datos del usuario authenticado, se debe utilizar el siguiente endpoint:
 
 ``GET - http://localhost:3000/api/auth/me``
 
@@ -235,7 +237,7 @@ Esto significa que cualquier usuario puede obtener un producto utilizando su "sk
 
 <img src="./docs/003.png" ></img>
 
-> Para obtener un producto por su sku, consulte el siguiente endpoint ``GET - localhost:3000/api/products/:sku``.
+> Para obtener un producto por su sku, se debe consultar el siguiente endpoint ``GET - localhost:3000/api/products/:sku``.
 
 <img src="./docs/004.png" ></img>
 
@@ -245,19 +247,19 @@ Esto significa que cualquier usuario puede obtener un producto utilizando su "sk
 
 ###### Crear un Producto
 
-Para crear un producto, es necesario enviar una solicitud POST al endpoint http://localhost:3000/api/products con las siguientes propiedades en el cuerpo de la solicitud:
+Para crear un producto, es necesario enviar una solicitud POST al endpoint ``http://localhost:3000/api/products`` con las siguientes propiedades en el cuerpo de la solicitud:
 
 - name: el nombre del producto.
 - price: el precio del producto.
 - stockQuantity: la cantidad de stock disponible del producto.
 - category: la categoría a la que pertenece el producto.
-- tagIds: un arreglo de IDs de los tags asociados al producto.
+- tagIds: un arreglo de ids de los tags asociados al producto.
 - additionalInformation: información adicional sobre el producto.
 - assessment: la valoración del producto.
 - description: una descripción detallada del producto.
 - urlAssociatedImages: un arreglo de URLs de imágenes asociadas al productos
 
-si los IDs de los tags no existen, se producirá un error. Para poder obtener los tags existentes, puede auxiliarse del siguiente enpoint: ``GET - http://localhost:3000/api/tags``
+si los ids de los tags no existen, se producirá un error. Para poder obtener los tags existentes, se puede auxiliar del siguiente enpoint: ``GET - http://localhost:3000/api/tags``
 
 ###### Actualizar un Producto
 
@@ -267,19 +269,19 @@ Para actualizar un producto, es necesario enviar una solicitud PUT al endpoint h
 - price: el precio del producto.
 - stockQuantity: la cantidad de stock disponible del producto.
 - category: la categoría a la que pertenece el producto.
-- tagIds: un arreglo de IDs de los tags asociados al producto.
+- tagIds: un arreglo de ids de los tags asociados al producto.
 - additionalInformation: información adicional sobre el producto.
 - assessment: la valoración del producto.
 - description: una descripción detallada del producto.
 - urlAssociatedImages: un arreglo de URLs de imágenes asociadas al producto.
 
-Es importante tener en cuenta que, al actualizar un producto mediante las URL de imágenes, se eliminarán todas las URL asociadas y se asignarán las nuevas URL proporcionadas.
+Es importante tener en cuenta que, al actualizar un producto mediante las url de imágenes, se eliminarán todas las url asociadas y se asignarán las nuevas url proporcionadas.
 
-si los IDs de los tags proporcionados no existen en la base de datos, se generará un error.
+Si los ids de los tags proporcionados no existen en la base de datos, se generará un error.
 
 ###### Eliminar un Producto
 
-Si desea eliminar un producto específico, debe enviar una solicitud DELETE al endpoint ``http://localhost:3000/api/products/:sku``, donde :sku es el sku del producto que desea eliminar. Si el sku proporcionado no se encuentra en la base de datos, se generará un error.
+Si se desea eliminar un producto específico, se debe enviar una solicitud DELETE al endpoint ``http://localhost:3000/api/products/:sku``, donde :sku es el sku del producto que desea eliminar. Si el sku proporcionado no se encuentra en la base de datos, se generará un error.
 
 ##### 3 - Endpoint sobre resultados de busqueda
 
@@ -295,21 +297,21 @@ POST      -http://localhost:3000/api/products/fecth
 
 QUERY     -page: pagina actual
 
-BODY      -name: que busca productos por su nombre.
-          -price: que busca por el precio del producto.   
-          -stockQuantity: que busca por la cantidad de stock disponible.
-          -category: que busca por la categoría del producto.   
-          -tagIds: que busca por los identificadores únicos universales de sus etiquetas.
-          -additionalInformation: que busca por la información.adicional del producto.
-          -assessment: que busca por la valoración del producto. 
-          -description: que busca por la descripción del producto.
-          -associatedImage: que busca por la URL guardada de la imagen asociada al producto.
+BODY      -name: busca productos por su nombre.
+          -price: busca por el precio del producto.   
+          -stockQuantity: busca por la cantidad de stock disponible.
+          -category: busca por la categoría del producto.   
+          -tagIds: busca por las ids de sus tags.
+          -additionalInformation: busca por la información adicional del producto.
+          -assessment: busca por la valoración del producto. 
+          -description: busca por la descripción del producto.
+          -associatedImage: busca por la url guardada de la imagen asociada al producto.
 
 RESPONSE  -products: total de productos filtrados
-          -page: pagina actual,
+          -page: página actual,
           -totalElement: total de productos,
-          -totalPage: total de paginas,
-          -perPage: total de productos por pagina
+          -totalPage: total de páginas,
+          -perPage: total de productos por página
 ```
 
 ##### 4 - Endpoint sobre cantidad de resultados de busqueda
@@ -322,14 +324,15 @@ cualquiera de las características del producto.
 ```text
 POST      -http://localhost:3000/api/products/total-element
 
-BODY      -name: que busca productos por su nombre.
-          -price: que busca por el precio del producto. 
-          -stockQuantity: que busca por la cantidad de stock -disponible.
-          -category: que busca por la categoría del producto. -tagIds: que busca por los identificadores únicos universales de sus etiquetas.
-          -additionalInformation: que busca por la información.adicional del producto.
-          -assessment: que busca por la valoración del producto. 
-          -description: que busca por la descripción del producto.
-          -associatedImage: que busca por la URL guardada de la imagen asociada al producto.
+BODY      -name: busca productos por su nombre.
+          -price: busca por el precio del producto.   
+          -stockQuantity: busca por la cantidad de stock disponible.
+          -category: busca por la categoría del producto.   
+          -tagIds: busca por las ids de sus tags.
+          -additionalInformation: busca por la información adicional del producto.
+          -assessment: busca por la valoración del producto. 
+          -description: busca por la descripción del producto.
+          -associatedImage: busca por la url guardada de la imagen asociada al producto.
 
 RESPONSE  totalElement: total de productos
 ```
@@ -369,10 +372,10 @@ GET       -http://localhost:3000/api/sales
 QUERY     -page: pagina actual
 
 RESPONSE  -sales: total de ventas filtradas
-          -page: pagina actual,
+          -page: página actual,
           -totalElement: total de ventas,
-          -totalPage: total de paginas,
-          -perPage: total de ventas por pagina
+          -totalPage: total de páginas,
+          -perPage: total de ventas por página
 ```
 
 ##### 7 - Endpoint que permita mostrar la ganancia total.
@@ -399,10 +402,10 @@ GET       -http://localhost:3000/api/products/without-stock-quantity
 QUERY     -page: pagina actual
 
 RESPONSE  -products: total de productos filtrados con 0 stock
-          -page: pagina actual,
+          -page: página actual,
           -totalElement: total de productos,
-          -totalPage: total de paginas,
-          -perPage: total de productos por pagina
+          -totalPage: total de páginas,
+          -perPage: total de productos por página
 ```
 
 ## Datos Extras
@@ -412,8 +415,8 @@ RESPONSE  -products: total de productos filtrados con 0 stock
 <img src="./docs/009.png" width="300px" heigth="300px" ></img>
 
 - db: esta carpeta almacena la base de datos del proyecto, que en este caso es SQLite.
-- docs: se utiliza para almacenar recursos que se utilizan en el archivo "readme.md"
-- postman: en esta carpeta, se encuentra el archivo Postman que se utiliza para ayudar en la consulta de endpoints.
+- docs: se utiliza para almacenar recursos que se emplean en el archivo "readme.md"
+- postman: en esta carpeta, se encuentra el archivo ``doc.postman.json`` que se utiliza para ayudar en la consulta de endpoints.
 - prisma: esta carpeta contiene el archivo de configuración y el esquema de Prisma.
 - src: esta carpeta contiene la lógica de negocio de la aplicación.
   - common: en esta carpeta, se encuentran los servicios comunes del proyecto, como guards, mocks, utils, interfaces, libs, entre otros.
@@ -433,9 +436,9 @@ El archivo launcher.service.ts, que se encuentra en la ruta ``src/core/launcher/
 
 ### Postman
 
-Para utilizar Postman, puede importar el archivo doc.postman.json que se encuentra en la ruta postman/doc.postman.json. Asegúrese de seguir las instrucciones adecuadas al importar el archivo para que pueda aprovechar todas las funcionalidades de manera efectiva en su proyecto. A continuación, algunas características sobre su uso:
+Para utilizar Postman, se puede importar el archivo ``doc.postman.json`` que se encuentra en la ruta ``postman/doc.postman.json``. Se debe asegurar seguir las instrucciones adecuadas al importar el archivo para que se pueda aprovechar todas las funcionalidades de manera efectiva en su proyecto. A continuación, algunas características sobre su uso:
 
-- Puedes utilizar el conjunto de "helpers" de Postman para utilizar endpoints ya creados.
+- Se puede utilizar el conjunto de ``helpers`` de Postman y agilizar las consultas a los endpoints ya creados.
 - En el endpoint ``http://localhost:3000/api/auth/login``, existe un script que se encarga de establecer automáticamente el accessToken, lo cual evita la necesidad de manejarlo manualmente.
 
 ## Autor
