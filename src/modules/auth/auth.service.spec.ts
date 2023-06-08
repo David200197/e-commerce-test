@@ -96,12 +96,12 @@ describe('AuthService', () => {
       user.changeHasData(true);
     });
 
-    it('Should be throw "user is unauthorized" error', async () => {
+    it('Should be throw "invalid credentials" error with deferents password', async () => {
       mockCompare.mockImplementation(() => false);
       const resultFn = jest.fn(async () => {
         await service.login({ email: 'email', password: 'password' });
       });
-      expect(resultFn).rejects.toThrow(USER_IS_UNAUTHORIZED);
+      expect(resultFn).rejects.toThrow(INVALID_CREDENTIALS);
     });
   });
 });
