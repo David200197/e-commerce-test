@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Un ejemplo de e-commerce orientado a demostrar habilidades como backend developer.
+Un ejemplo de e-commerce**s** orientado a demostrar habilidades como backend developer.
 
 ## Tecnologías
 
@@ -134,6 +134,19 @@ yarn:
 $  yarn prisma studio
 
 ```
+
+## Variables de Entorno
+
+Cree en el directorio base un archivo de nombre ``.env``con los siguientes datos:
+
+```.env
+JWT_SECRET="..."
+DATABASE_URL="file:../db/index.db"
+```
+
+JWT_SECRET: Valor para generar el token de acceso JWT, este valor no debe ser público
+
+DATABASE_URL: Ruta sobre la ubicación de la base de datos. Para este ejemplo, solo debe copiar el proporcionado por la documentación
 
 ## Resolución de Problemas
 
